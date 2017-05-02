@@ -1,6 +1,7 @@
 # 02 schnitt1.R: Berechnet die Durchschnitte
 
 # setwd('~/Dropbox/Signal&Rauschen/06_Daten & Visualisierung/')  # Arndt Pfad
+# setwd('~/Git/signalundrauschen')
 
 library(dplyr)
 library(lubridate)
@@ -24,7 +25,9 @@ monatsschnitt <-
                          fdp = 'FDP', gruene = "Bündnis 90/Die Grünen",
                          linke_pds = 'Die Linke/PDS', piraten = 'Piraten',
                          sonstige = 'Sonstige', spd = 'SPD')) %>%
-  spread(partei, stimmanteil)
+  spread(partei, stimmanteil) %>% ungroup() %>% 
+  select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, `Bündnis 90/Die Grünen`, 
+         FDP)
 
 write.csv(monatsschnitt, 'schnitt1_monat.csv', row.names = F)
 
@@ -39,6 +42,8 @@ wochenschnitt <- df %>% filter(!is.na(jahr), !is.na(woche)) %>%
                          fdp = 'FDP', gruene = "Bündnis 90/Die Grünen",
                          linke_pds = 'Die Linke/PDS', piraten = 'Piraten',
                          sonstige = 'Sonstige', spd = 'SPD')) %>%
-  spread(partei, stimmanteil)
+  spread(partei, stimmanteil) %>% ungroup() %>% 
+  select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, `Bündnis 90/Die Grünen`, 
+         FDP)
 
 write.csv(wochenschnitt, 'schnitt1_woche.csv', row.names = F)
