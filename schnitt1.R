@@ -20,13 +20,13 @@ monatsschnitt <-
   group_by(jahr, monat, partei) %>%
   summarise(stimmanteil = mean(stimmanteil, na.rm = T)) %>%
   filter(!is.na(stimmanteil)) %>%
-  mutate(date = paste(jahr, monat, sep = '-'),
+  mutate(date = paste(jahr, monat, '01', sep = '-'),
          partei = recode(partei, afd = 'AfD', cdu_csu = 'CDU/CSU',
                          fdp = 'FDP', gruene = "Bündnis 90/Die Grünen",
                          linke_pds = 'Die Linke/PDS', piraten = 'Piraten',
                          sonstige = 'Sonstige', spd = 'SPD')) %>%
-  spread(partei, stimmanteil) %>% ungroup() %>% 
-  select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, `Bündnis 90/Die Grünen`, 
+  spread(partei, stimmanteil) %>% ungroup() %>%
+  select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, `Bündnis 90/Die Grünen`,
          FDP)
 
 write.csv(monatsschnitt, 'schnitt1_monat.csv', row.names = F)
@@ -37,13 +37,13 @@ wochenschnitt <- df %>% filter(!is.na(jahr), !is.na(woche)) %>%
   group_by(jahr, woche, partei) %>%
   summarise(stimmanteil = mean(stimmanteil, na.rm = T)) %>%
   filter(!is.na(stimmanteil)) %>%
-  mutate(date = paste(jahr, woche, sep = '-'),
+  mutate(date = as.Date(paste(jahr, woche, 1, sep="-"), "%Y-%U-%u"),
          partei = recode(partei, afd = 'AfD', cdu_csu = 'CDU/CSU',
                          fdp = 'FDP', gruene = "Bündnis 90/Die Grünen",
                          linke_pds = 'Die Linke/PDS', piraten = 'Piraten',
                          sonstige = 'Sonstige', spd = 'SPD')) %>%
-  spread(partei, stimmanteil) %>% ungroup() %>% 
-  select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, `Bündnis 90/Die Grünen`, 
+  spread(partei, stimmanteil) %>% ungroup() %>%
+  select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, `Bündnis 90/Die Grünen`,
          FDP)
 
 write.csv(wochenschnitt, 'schnitt1_woche.csv', row.names = F)
