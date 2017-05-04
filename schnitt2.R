@@ -117,7 +117,7 @@ for(i in 1:length(daten)) {
   tmp <- tmp %>% group_by(partei) %>%
     summarise(stimmanteil = round(weighted.mean(stimmanteil, gewicht,
                                                 na.rm = T), 1))
-  tmp$datum <- neu$datum[i]
+  tmp$datum <- daten[i]
 
   if(i == 1) {
     schnitte <- tmp
@@ -127,18 +127,17 @@ for(i in 1:length(daten)) {
 
 }
 
-f <-
-ggplot(schnitte, aes(x = datum, y = stimmanteil, color = partei)) +
-  geom_line()
+# f <-
+# ggplot(schnitte, aes(x = datum, y = stimmanteil, color = partei)) +
+#   geom_line()
+# ggsave('f_schnitt2.png', f)
 
-ggsave('f_schnitt2.png', f)
-
-schnitte <- schnitte %>% tidyr::spread(partei, stimmanteil) %>% 
-  ungroup() %>% rename(`CDU/CSU` = cdu_csu, SPD = spd, 
-                       `Die Linke/PDS` = linke_pds, AfD = afd,
+schnitte <- schnitte %>% tidyr::spread(partei, stimmanteil) %>%
+  ungroup() %>% rename(`CDU/CSU` = cdu_csu, SPD = spd,
+                       `Die Linke` = linke_pds, AfD = afd,
                        `Bündnis 90/Die Grünen` = gruene, FDP = fdp,
-                       date = datum) %>% 
-  select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, `Bündnis 90/Die Grünen`, 
+                       date = datum) %>%
+  select(date, `CDU/CSU`, SPD, `Die Linke`, AfD, `Bündnis 90/Die Grünen`,
          FDP)
 
 write.csv(schnitte, 'schnitt2.csv', row.names = F)
