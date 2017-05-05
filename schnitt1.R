@@ -25,6 +25,7 @@ monatsschnitt <-
                          fdp = 'FDP', gruene = "Bündnis 90/Die Grünen",
                          linke_pds = 'Die Linke/PDS', piraten = 'Piraten',
                          sonstige = 'Sonstige', spd = 'SPD')) %>%
+  filter(!is.na(date)) %>%
   spread(partei, stimmanteil) %>% ungroup() %>%
   select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, `Bündnis 90/Die Grünen`,
          FDP)
@@ -42,6 +43,7 @@ wochenschnitt <- df %>% filter(!is.na(jahr), !is.na(woche)) %>%
                          fdp = 'FDP', gruene = "Bündnis 90/Die Grünen",
                          linke_pds = 'Die Linke/PDS', piraten = 'Piraten',
                          sonstige = 'Sonstige', spd = 'SPD')) %>%
+  filter(!is.na(date)) %>%
   spread(partei, stimmanteil) %>% ungroup() %>%
   select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, `Bündnis 90/Die Grünen`,
          FDP)
