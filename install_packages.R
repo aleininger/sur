@@ -1,5 +1,5 @@
 # 00 scrape.R: installs packages necessary for scrape.R
-packages <- c('htmltab', 'string', 'dplyr', 'lubridate', 'tidyr')
+packages <- c('htmltab', 'stringr', 'dplyr', 'lubridate', 'tidyr')
 for (p in packages) {
   if (p %in% installed.packages()[,1]) {
     print(paste0(p, ' is installed. Will now load ', p,'.'))
