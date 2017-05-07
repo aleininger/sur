@@ -102,11 +102,11 @@ daten <- seq(ymd('2017-01-01'), Sys.Date(), by = 'days')
 # darin Reduzierung des alten auf die zwei Woche vor Tag
 
 for(i in 1:length(daten)) {
-#  print(i)
+  #  print(i)
   tmp <- df %>% filter(datum <= daten[i], datum >= daten[i] - weeks(2))
   # Anlegen der Zeitgewichte
   tmp$zeitabstand <- tmp$datum - daten[i]
-  tmp$zeitgewicht <- 1 / (1+exp(-as.integer(tmp$zeitabstand)-7))
+  tmp$zeitgewicht <- 1 / (1 + exp(-as.integer(tmp$zeitabstand) - 7))
   # Zusammenfassen der Gewichte
   tmp$gewicht <- tmp$zeitgewicht + tmp$tgewicht + tmp$rmsegewicht
 
@@ -114,10 +114,10 @@ for(i in 1:length(daten)) {
   # tmp %>% select(zeitabstand, zeitgewicht, t, tgewicht, rmse, rmsegewicht, gewicht)
 
   # Aggregation
-  tmp <- tmp %>% group_by(partei) %>%
+  tmp <- tmp[!is.na(tmp$gewicht), ] %>% group_by(partei) %>%
     summarise(stimmanteil = round(weighted.mean(stimmanteil, gewicht,
                                                 na.rm = T), 1))
-  tmp$datum <- neu$datum[i]
+  tmp$datum <- daten[i]
 
   if(i == 1) {
     schnitte <- tmp
