@@ -1,21 +1,32 @@
+##(#####################################
+## install_packages.R
+#######################################
+
+# soll da stringr geladen werden?
+
+#######################################
 ## scrape.R
+#######################################
 
-# remove feldzeit 
-Brauchen wir original feldzeit überhaupt?
+# (line 143) remove feldzeit
 
+# (line 147 & 149) swap sort and abweichung
+
+#######################################
 ## abweichung.R
+#######################################
 
-# take tmp from whole dataset
+# (line 16) take tmp from whole dataset
 2 Wochen können nur subtrahiert werden wenn wir alle Daten einschließen.
 
-# months(6) -> weeks(2)
+# (line 16) months(6) -> weeks(2)
 Sollen hier 2 Wochen oder 6 Monate berechnet werden
 
-#  date <= date >=
+# (line 16)  date <= date >=
 Soll die ursprünglich Umfrage mit aufgenommen werden?
 
+#######################################
 ## schnitt2.R
+#######################################
 
-# einfach Abweichung kein join?
-
-# subset gewicht is na
+# (line 117) subset gewicht is na else calc = NA

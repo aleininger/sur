@@ -1,7 +1,7 @@
 # 01 scrape.R (alternativ): zieht die Daten von wahlrecht.de
 
 # setwd('~/Dropbox/Signal&Rauschen/06_Daten & Visualisierung/')  # Arndt Pfad
-setwd("C:\\Users\\Jan\\Desktop\\arndt_test")
+setwd("C:\\Users\\Jan\\Desktop\\arndt\\sur")
 
 library(htmltab)
 library(dplyr)
@@ -69,6 +69,8 @@ if (!file.exists('scraped_tables.RData')) {
     tmp$url <- url
     d <- bind_rows(d, tmp)
   }
+  # Duplikate entfernen
+  d <- d %>% distinct(.keep_all = TRUE)
   
 } else {
   cat("Fetch only updated files.")
@@ -187,7 +189,7 @@ df$lwr <- round(df$stimmanteil - 1.96 * df$se * 100, 1)  # Unteres Ende 95% Konf
 df$upr <- round(df$stimmanteil + 1.96 * df$se * 100, 1) # Oberes Ende 95% Konfidenzintervall
 
 # Feldzeit Original löschen
-df <- df[ ,-3]
+df$feldzeit <- NULL
 
 # Abweichung berechnen ---------------------------------------------------------
 

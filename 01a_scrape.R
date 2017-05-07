@@ -67,6 +67,8 @@ for(url in urls) {
   d <- bind_rows(d, tmp)
 }
 
+# Duplikate entfernen
+d <- d %>% distinct(.keep_all = TRUE)
 save(list = 'd', file = 'scraped_tables.RData')
 
 # load('scraped_tables.RData')
@@ -138,7 +140,7 @@ df$lwr <- round(df$stimmanteil - 1.96 * df$se * 100, 1)  # Unteres Ende 95% Konf
 df$upr <- round(df$stimmanteil + 1.96 * df$se * 100, 1) # Oberes Ende 95% Konfidenzintervall
 
 # Feldzeit Original löschen
-df <- df[ ,-3]
+df$feldzeit <- NULL
 
 # Abweichung berechnen ---------------------------------------------------------
 
