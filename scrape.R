@@ -142,9 +142,10 @@ df <- df[ ,-3]
 
 # Abweichung berechnen ---------------------------------------------------------
 
+df <- df %>% arrange(desc(datum), institut, partei)
+
 source('abweichung.R')
 
-df <- df %>% arrange(desc(datum), institut, partei)
 
 write.csv(df, 'umfragedaten.csv', row.names = F)
 
