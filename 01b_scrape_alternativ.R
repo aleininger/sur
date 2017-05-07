@@ -1,7 +1,6 @@
 # 01 scrape.R (alternativ): zieht die Daten von wahlrecht.de
 
 # setwd('~/Dropbox/Signal&Rauschen/06_Daten & Visualisierung/')  # Arndt Pfad
-setwd("C:\\Users\\Jan\\Desktop\\arndt\\sur")
 
 library(htmltab)
 library(dplyr)
