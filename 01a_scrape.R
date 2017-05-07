@@ -144,7 +144,7 @@ df <- df[ ,-3]
 
 df <- df %>% arrange(desc(datum), institut, partei)
 
-source('abweichung.R')
+source('02_abweichung.R')
 
 
 write.csv(df, 'umfragedaten.csv', row.names = F)
