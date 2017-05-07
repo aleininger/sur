@@ -13,3 +13,9 @@ Sollen hier 2 Wochen oder 6 Monate berechnet werden
 
 #  date <= date >=
 Soll die ursprünglich Umfrage mit aufgenommen werden?
+
+## schnitt2.R
+
+# einfach Abweichung kein join?
+
+# subset gewicht is na
