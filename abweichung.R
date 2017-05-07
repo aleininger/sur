@@ -13,7 +13,7 @@
 df$abweichung <- as.numeric(NA)
 
 for(i in 1:nrow(subset(df, jahr == 2017))) {
-  tmp <- subset(df, jahr == 2017) %>% filter(datum < df$datum[i], datum > df$datum[i] - months(6))
+  tmp <- df %>% filter(datum <= df$datum[i], datum >= df$datum[i] - weeks(2))
   
   # Durchschnitt der anderen Institute
   andere <- tmp %>% filter(institut != df$institut[i], partei == df$partei[i]) %>%
