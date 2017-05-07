@@ -5,7 +5,6 @@
 library(dplyr)
 library(lubridate)
 library(tidyr)
-library(ggplot2)
 
 df <- read.csv('umfragedaten.csv', stringsAsFactors = F) %>% tbl_df()
 df$datum <- ymd(df$datum)
@@ -127,11 +126,11 @@ for(i in 1:length(daten)) {
 
 }
 
-f <-
-ggplot(schnitte, aes(x = datum, y = stimmanteil, color = partei)) +
-  geom_line()
-
-ggsave('f_schnitt2.png', f)
+# f <-
+# ggplot(schnitte, aes(x = datum, y = stimmanteil, color = partei)) +
+#   geom_line()
+#
+# ggsave('f_schnitt2.png', f)
 
 schnitte <- schnitte %>% tidyr::spread(partei, stimmanteil) %>%
   ungroup() %>% rename(`CDU/CSU` = cdu_csu, SPD = spd,

@@ -57,7 +57,7 @@ if (!file.exists('scraped_tables.RData')) {
     'http://www.wahlrecht.de/umfragen/insa.htm'
   )
 
-  # Tabellen herunterladen und aneinanderhÃ¤nge
+  # Tabellen herunterladen und aneinanderhängen
   d <- data.frame()
   for(url in urls) {
     cat(url)
@@ -96,7 +96,7 @@ if (!file.exists('scraped_tables.RData')) {
     'http://www.wahlrecht.de/umfragen/insa.htm'
   )
 
-  # Tabellen herunterladen und aneinanderhÃ¤nge
+  # Tabellen herunterladen und aneinanderhängen
   d_new <- data.frame()
   for(url in urls) {
     cat(url)
@@ -186,9 +186,6 @@ df <- df %>% filter(partei != 'sonstige', partei != 'piraten')
 df$se <- sqrt(((df$stimmanteil/100) * (1 - (df$stimmanteil/100))) / df$befragte)  # Standardfehler
 df$lwr <- round(df$stimmanteil - 1.96 * df$se * 100, 1)  # Unteres Ende 95% Konfidenzintervall
 df$upr <- round(df$stimmanteil + 1.96 * df$se * 100, 1) # Oberes Ende 95% Konfidenzintervall
-
-# Feldzeit Original löschen
-df$feldzeit <- NULL
 
 # Abweichung berechnen ---------------------------------------------------------
 
