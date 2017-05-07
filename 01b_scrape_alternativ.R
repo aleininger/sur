@@ -56,7 +56,7 @@ if (!file.exists('scraped_tables.RData')) {
     # INSA
     'http://www.wahlrecht.de/umfragen/insa.htm'
   )
-  
+
   # Tabellen herunterladen und aneinanderhÃ¤nge
   d <- data.frame()
   for(url in urls) {
@@ -70,7 +70,7 @@ if (!file.exists('scraped_tables.RData')) {
   }
   # Duplikate entfernen
   d <- d %>% distinct(.keep_all = TRUE)
-  
+
 } else {
   cat("Fetch only updated files.")
   urls <- c(
@@ -110,9 +110,9 @@ if (!file.exists('scraped_tables.RData')) {
 
   # alten Daten laden
   load('scraped_tables.RData')
-  
+
   # zusammenfügen der alten und neuen Daten
-  d <- bind_rows(d_new, d)  
+  d <- bind_rows(d_new, d)
 
   # Duplikate entfernen
   d <- d %>% distinct(.keep_all = TRUE)
@@ -147,10 +147,10 @@ df$linke_pds[which(is.na(df$linke_pds))] <- df$linke[which(is.na(df$linke_pds))]
 df$linke <- NULL
 
 df$befragte <-
-  str_replace(df$befragte, 'â|>', '') %>%
+  str_replace(df$befragte, '≈|>', '') %>%
   str_replace(pattern = '\\.', replacement = '') %>%
-  str_replace(pattern = 'O â¢ ', '') %>%
-  str_replace(pattern = 'T â¢ ', '')
+  str_replace(pattern = 'O • ', '') %>%
+  str_replace(pattern = 'T • ', '')
 df$befragte <- as.integer(df$befragte)
 
 # Datumsangaben
