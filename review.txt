@@ -1,0 +1,15 @@
+## scrape.R
+
+# remove feldzeit 
+Brauchen wir original feldzeit überhaupt?
+
+## abweichung.R
+
+# take tmp from whole dataset
+2 Wochen können nur subtrahiert werden wenn wir alle Daten einschließen.
+
+# months(6) -> weeks(2)
+Sollen hier 2 Wochen oder 6 Monate berechnet werden
+
+#  date <= date >=
+Soll die ursprünglich Umfrage mit aufgenommen werden?
