@@ -1,6 +1,7 @@
 # 01 scrape.R: zieht die Daten von wahlrecht.de
 
 # setwd('~/Dropbox/Signal&Rauschen/06_Daten & Visualisierung/')  # Arndt Pfad
+setwd("C:\\Users\\Jan\\Desktop\\arndt_test")
 
 library(htmltab)
 library(dplyr)
@@ -135,6 +136,9 @@ df <- df %>% filter(partei != 'sonstige', partei != 'piraten')
 df$se <- sqrt(((df$stimmanteil/100) * (1 - (df$stimmanteil/100))) / df$befragte)  # Standardfehler
 df$lwr <- round(df$stimmanteil - 1.96 * df$se * 100, 1)  # Unteres Ende 95% Konfidenzintervall
 df$upr <- round(df$stimmanteil + 1.96 * df$se * 100, 1) # Oberes Ende 95% Konfidenzintervall
+
+# Feldzeit Original löschen
+df <- df[ ,-3]
 
 # Abweichung berechnen ---------------------------------------------------------
 
