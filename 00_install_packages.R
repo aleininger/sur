@@ -1,4 +1,5 @@
 # 00 scrape.R: installs packages necessary for scrape.R
+options(repos=structure(c(CRAN="https://cloud.r-project.org/")))
 packages <- c('htmltab', 'stringr', 'dplyr', 'lubridate', 'tidyr')
 for (p in packages) {
   if (p %in% installed.packages()[,1]) {
