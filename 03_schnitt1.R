@@ -7,7 +7,7 @@ library(dplyr)
 library(lubridate)
 library(tidyr)
 
-df <- read.csv('umfragedaten.csv', stringsAsFactors = F) %>% tbl_df()
+df <- read.csv('daten/umfragedaten.csv', stringsAsFactors = F) %>% tbl_df()
 
 df$monat <- month(df$datum) # Monat der Umfrage
 
@@ -30,7 +30,7 @@ monatsschnitt <-
   select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, `Bündnis 90/Die Grünen`,
          FDP)
 
-write.csv(monatsschnitt, 'schnitt1_monat.csv', row.names = F)
+write.csv(monatsschnitt, 'daten/schnitt1_monat.csv', row.names = F)
 
 # Wöchentlicher Durchschnitt
 
@@ -48,4 +48,4 @@ wochenschnitt <- df %>% filter(!is.na(jahr), !is.na(woche)) %>%
   select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, `Bündnis 90/Die Grünen`,
          FDP)
 
-write.csv(wochenschnitt, 'schnitt1_woche.csv', row.names = F)
+write.csv(wochenschnitt, 'daten/schnitt1_woche.csv', row.names = F)

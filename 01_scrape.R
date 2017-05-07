@@ -8,7 +8,7 @@ library(stringr)
 library(lubridate)
 
 # Wenn das Script zum Erstenmal ausgeführt wird, dann werden alle Daten gezogen, ansonsten nur die aktuellen. Anschließend werden die alten und die neuen Daten zusammengefügt und Duplikate gelöscht.
-if (!file.exists('scraped_tables.RData')) {
+if (!file.exists('daten/scraped_tables.RData')) {
   cat("First Time. Fetch all files.")
   urls <- c(
     # Allensbach
@@ -109,7 +109,7 @@ if (!file.exists('scraped_tables.RData')) {
   }
 
   # alten Daten laden
-  load('scraped_tables.RData')
+  load('daten/scraped_tables.RData')
 
   # zusammenfügen der alten und neuen Daten
   d <- bind_rows(d_new, d)
@@ -118,19 +118,17 @@ if (!file.exists('scraped_tables.RData')) {
   d <- d %>% distinct(.keep_all = TRUE)
 }
 
-save(list = 'd', file = 'scraped_tables.RData')
+save(list = 'd', file = 'daten/scraped_tables.RData')
 
 
 # Formatierung des Ursprungsdatensatzes (1 Zeile = 1 Umfrage)
 df <- tbl_df(d)
 
-df <- df %>% select(datum, `CDU/CSU`:PDS)
+df <- df %>% select(datum, `CDU/CSU`:url, Linke.PDS, PIRATEN, PDS)
 
 names(df) <- c('vdatum', 'cdu_csu', 'spd', 'gruene', 'fdp', 'linke', 'afd',
                'sonstige', 'befragte', 'feldzeit', 'institut', 'url',
-               'piraten', 'linke_pds', 'empty', 'pds')
-
-df <- df %>% select(-empty)
+               'piraten', 'linke_pds', 'pds')
 
 df <- df %>% filter(!grepl('Wahl', vdatum) & !grepl('wahl', befragte) &
                       !grepl('wahl', feldzeit))  # Wahlergebnisse entfernen
@@ -194,7 +192,7 @@ df <- df %>% arrange(desc(datum), institut, partei)
 source('02_abweichung.R')
 
 
-write.csv(df, 'umfragedaten.csv', row.names = F)
+write.csv(df, 'daten/umfragedaten.csv', row.names = F)
 
 # pth <- '../07_Daten von Wahlrecht de/'
 # write.csv(df, paste0(pth, 'umfragedaten.csv', format(Sys.time(), "%Y-%m-%d_%H-%M")), row.names = F)

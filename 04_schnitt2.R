@@ -6,7 +6,7 @@ library(dplyr)
 library(lubridate)
 library(tidyr)
 
-df <- read.csv('umfragedaten.csv', stringsAsFactors = F) %>% tbl_df()
+df <- read.csv('daten/umfragedaten.csv', stringsAsFactors = F) %>% tbl_df()
 df$datum <- ymd(df$datum)
 
 
@@ -38,7 +38,7 @@ df$tgewicht <- 1 / df$t
 # Prognosefehler ---------------------------------------------------------------
 
 # Datensatz auf relevanten Zeitraum reduzieren
-elec_dates <- read.csv('wahldaten.csv', stringsAsFactors = F)
+elec_dates <- read.csv('input/wahldaten.csv', stringsAsFactors = F)
 elec_dates <- ymd(elec_dates$datum[14:18])
 
 sub <-
@@ -52,7 +52,7 @@ df %>% mutate(vdatum = ymd(vdatum)) %>% arrange(vdatum) %>%
 
 # Tatsächliche Wahlergebnisse ergänzen
 
-elec <- read.csv('view_election.csv', stringsAsFactors = F) %>% tbl_df()
+elec <- read.csv('input/view_election.csv', stringsAsFactors = F) %>% tbl_df()
 
 elec_results <-
 elec %>% mutate(vdatum = ymd(election_date), jahr = year(vdatum)) %>%
@@ -140,4 +140,4 @@ schnitte <- schnitte %>% tidyr::spread(partei, stimmanteil) %>%
   select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, `Bündnis 90/Die Grünen`,
          FDP)
 
-write.csv(schnitte, 'schnitt2.csv', row.names = F)
+write.csv(schnitte, 'daten/schnitt2.csv', row.names = F)
