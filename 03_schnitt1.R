@@ -48,4 +48,4 @@ wochenschnitt <- df %>% filter(!is.na(jahr), !is.na(woche)) %>%
   select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, `Bündnis 90/Die Grünen`,
          FDP)
 
-write.csv(wochenschnitt, 'daten/schnitt1_woche.csv', row.names = F)
+write.csv(wochenschnitt, 'daten/schnitt1.csv', row.names = F)

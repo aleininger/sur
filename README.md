@@ -10,7 +10,7 @@ Dieses Repository enthält sämtliche Daten hinter den Visualisierungen auf http
 
 `umfragedaten.csv` enthält alle Umfragewerte im [tidy data](https://en.wikipedia.org/wiki/Tidy_data)-Format (Sozialwissenschaftler kennen es auch als 'long format'). Eine Zeile enthält den Umfragewert eines Instituts für eine Partei.
 
-`schnitt1_woche.csv` enthält die Daten, die als 'Umfrageschnitt pur' visualisiert werden. Diese werden von `03_schnitt1.R` aus dem `umfragedaten.csv` aggregiert.
+`schnitt1.csv` enthält die Daten, die als 'Umfrageschnitt pur' visualisiert werden. Diese werden von `03_schnitt1.R` aus dem `umfragedaten.csv` aggregiert.
 
 `schnitt2.csv` enthält die Daten, die als Umfrageschnitt pur visualisiert werden. Diese werden von `04_schnitt2.R` aus dem `umfragedaten.csv` aggregiert.
 
