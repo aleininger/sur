@@ -191,7 +191,6 @@ df <- df %>% arrange(desc(datum), institut, partei)
 
 source('02_abweichung.R')
 
-
 write.csv(df, 'daten/umfragedaten.csv', row.names = F)
 
 # pth <- '../07_Daten von Wahlrecht de/'
