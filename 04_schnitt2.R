@@ -1,6 +1,7 @@
 # 02 schnitt2.R: Berechnet die Durchschnitte
 
 # setwd('~/Dropbox/Signal&Rauschen/06_Daten & Visualisierung/')  # Arndt Pfad
+# setwd('~/Git/signalundrauschen')
 
 library(dplyr)
 library(lubridate)
@@ -77,7 +78,7 @@ sub <- left_join(sub, elec_results, by = c('jahr', 'partei'))
 sub$prognosefehler <- abs(sub$stimmanteil - sub$ergebnis)
 sub$prognosefehler2 <- (sub$stimmanteil - sub$ergebnis)^2
 
-sub %>% select(vdatum, institut, partei, stimmanteil, ergebnis, prognosefehler,
+sub%>% filter(jahr == 1998) %>% select(vdatum, institut, partei, stimmanteil, ergebnis, prognosefehler,
                prognosefehler2)
 
 # RMSE (pro Institut-Partei berechnen), über alle Wahlen hinweg

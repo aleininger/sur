@@ -1,6 +1,7 @@
 # 01 scrape.R (alternativ): zieht die Daten von wahlrecht.de
 
 # setwd('~/Dropbox/Signal&Rauschen/06_Daten & Visualisierung/')  # Arndt Pfad
+# setwd('~/Git/signalundrauschen')
 
 library(htmltab)
 library(dplyr)
@@ -167,6 +168,8 @@ df$datum <-
 df$datum_char <- format(df$datum, '%d.%m.%Y')
 
 df$jahr <- year(df$datum)
+
+df$jahr[which(is.na(df$jahr))] <- df$vdatum[which(is.na(df$jahr))]
 
 # Institutsnamen anpassen
 df$institut <- car::recode(df$institut, "'allensbach' = 'Allensbach';

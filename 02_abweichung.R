@@ -1,4 +1,5 @@
 # setwd('~/Seafile/UMZ/nebentaetigkeit/signalundrauschen')
+# setwd('~/Git/signalundrauschen')
 #
 # library(dplyr)
 # library(lubridate)
