@@ -165,6 +165,8 @@ df$datum <-
          paste0(df$feldzeit_ende, year(df$vdatum))
   ) %>% str_extract('\\d\\d\\.\\d\\d\\.\\d\\d\\d\\d') %>% dmy
 
+df$datum[which(is.na(df$datum))] <- df$vdatum[which(is.na(df$datum))]
+
 df$datum_char <- format(df$datum, '%d.%m.%Y')
 
 df$jahr <- year(df$datum)
