@@ -169,7 +169,7 @@ df$datum_char <- format(df$datum, '%d.%m.%Y')
 
 df$jahr <- year(df$datum)
 
-df$jahr[which(is.na(df$jahr))] <- df$vdatum[which(is.na(df$jahr))]
+df$jahr[which(is.na(df$jahr))] <- year(df$vdatum[which(is.na(df$jahr))])
 
 # Institutsnamen anpassen
 df$institut <- car::recode(df$institut, "'allensbach' = 'Allensbach';
