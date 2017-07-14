@@ -3,6 +3,7 @@
 # setwd('~/Dropbox/Signal&Rauschen/06_Daten & Visualisierung/')  # Arndt Pfad
 # setwd('~/Git/signalundrauschen')
 
+library(foreign)
 library(dplyr)
 library(lubridate)
 library(tidyr)

@@ -34,29 +34,10 @@ df <-
 df %>% mutate(prognose = weight_s / (weight_s + weight_f) * voteshare_hat +
                 weight_f / (weight_s + weight_f) * stimmanteil)
 
-dfig <- df %>% filter(!is.na(prognose))
-
-ggplot(dfig, aes(x = date, y = prognose, color = party)) + geom_line() +
-  geom_hline(yintercept = 5, linetype = 'dashed', alpha = .9) +
-  scale_color_manual(values = c('darkblue', 'black', 'gold1', 'darkgreen',
-                                'purple', 'darkred')) +
-  theme_bw()
-
-dfig2 <- dfig %>% filter(date == ymd('2017-06-29'))
-dfig2 <- bind_rows(dfig2, dfig2)
-dfig2$date[7:12] <- ymd('2017-09-24')
-
-png('prognose.png')
-ggplot(dfig, aes(x = date, y = prognose, color = party)) + geom_line() +
-  geom_line(data = dfig2, linetype = 'dashed') +
-  geom_hline(yintercept = 5, linetype = 'dashed', alpha = .9) +
-  scale_color_manual(values = c('darkblue', 'black', 'gold1', 'darkgreen',
-                                'purple', 'darkred')) +
-  theme_bw()
-dev.off()
+df <- df %>% filter(!is.na(prognose))
 
 df <-
-dfig %>% select(date, party, prognose) %>%
+  df %>% select(date, party, prognose) %>%
   tidyr::spread(party, prognose) %>%
   ungroup() %>% rename(`CDU/CSU` = cdu_csu, SPD = spd,
                        `Die Linke/PDS` = linke_pds, AfD = afd,
@@ -64,4 +45,23 @@ dfig %>% select(date, party, prognose) %>%
   select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, `Bündnis 90/Die Grünen`,
          FDP)
 
-write.csv(df, 'daten/prognose.csv', row.names = F)
+write.csv(df, 'daten/schnitt3.csv', row.names = F)
+
+# ggplot(dfig, aes(x = date, y = prognose, color = party)) + geom_line() +
+#   geom_hline(yintercept = 5, linetype = 'dashed', alpha = .9) +
+#   scale_color_manual(values = c('darkblue', 'black', 'gold1', 'darkgreen',
+#                                 'purple', 'darkred')) +
+#   theme_bw()
+#
+# dfig2 <- dfig %>% filter(date == ymd('2017-06-29'))
+# dfig2 <- bind_rows(dfig2, dfig2)
+# dfig2$date[7:12] <- ymd('2017-09-24')
+#
+# png('prognose.png')
+# ggplot(dfig, aes(x = date, y = prognose, color = party)) + geom_line() +
+#   geom_line(data = dfig2, linetype = 'dashed') +
+#   geom_hline(yintercept = 5, linetype = 'dashed', alpha = .9) +
+#   scale_color_manual(values = c('darkblue', 'black', 'gold1', 'darkgreen',
+#                                 'purple', 'darkred')) +
+#   theme_bw()
+# dev.off()
