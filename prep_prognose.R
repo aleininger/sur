@@ -227,14 +227,36 @@ w %>% mutate(weight_umfrage = weight_f / (weight_s + weight_f),
 
 w$date <- ymd('2017-09-24') - w$abstand
 
-png('gew_umfragen.png')
-ggplot(w, aes(x = date, y = (weight_f / (weight_s + weight_f)), color = party)) + geom_line() +
-  ggtitle('Gewicht Umfragen')
+w$date <- ymd(w$date)
+
+w$party <- ordered(w$party, levels = c('cdu_csu', 'spd', 'linke_pds',
+                                       'gruene', 'fdp', 'afd'))
+w$Party <- recode(w$party, afd = 'AfD',
+                  cdu_csu = 'CDU/CSU',
+                  fdp = 'FDP',
+                  gruene = 'Bündnis 90/Die Grünen',
+                  linke_pds = 'Die Linke/PDS',
+                  spd = 'SPD')
+
+png('gew_umfragen.png', width = 600, height = 300)
+ggplot(w, aes(x = date, y = (weight_f / (weight_s + weight_f)), color = Party)) +
+  geom_line(size = 1) +
+  xlab('2017') + ylab('Gewichtung der Umfrage') +
+  scale_color_manual(values = c('black', 'darkred', 'purple', 'darkgreen',
+                                'gold1', 'darkblue'), name = '') +
+  theme_bw() + theme(legend.position = 'bottom') +
+  guides(colour = guide_legend(nrow = 1))
+  # ggtitle('Gewicht Umfragen')
 dev.off()
 
-png('gew_forecast.png')
-ggplot(w, aes(x = date, y = weight_s / (weight_s + weight_f), color = party)) + geom_line() +
-  ggtitle('Gewicht Forecast')
+png('gew_forecast.png', width = 600, height = 300)
+ggplot(w, aes(x = date, y = weight_s / (weight_s + weight_f), color = Party)) + geom_line(size = 1) +
+  xlab('2017') + ylab('Gewichtung der Prognose') +
+  scale_color_manual(values = c('black', 'darkred', 'purple', 'darkgreen',
+                                'gold1', 'darkblue'), name = '') +
+  theme_bw() + theme(legend.position = 'bottom') +
+  guides(colour = guide_legend(nrow = 1))
+  # ggtitle('Gewicht Forecast')
 dev.off()
 
 write.csv(w, 'input/weights.csv', row.names = F)
