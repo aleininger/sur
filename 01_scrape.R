@@ -35,12 +35,12 @@ if (!file.exists('daten/scraped_tables.RData')) {
     'http://www.wahlrecht.de/umfragen/politbarometer/politbarometer-2002.htm',
     'http://www.wahlrecht.de/umfragen/politbarometer/politbarometer-1998.htm',
     # Politische Stimmung
-    'http://www.wahlrecht.de/umfragen/politbarometer/stimmung.htm',
-    'http://www.wahlrecht.de/umfragen/politbarometer/stimmung-2013.htm',
-    'http://www.wahlrecht.de/umfragen/politbarometer/stimmung-2009.htm',
-    'http://www.wahlrecht.de/umfragen/politbarometer/stimmung-2005.htm',
-    'http://www.wahlrecht.de/umfragen/politbarometer/stimmung-2002.htm',
-    'http://www.wahlrecht.de/umfragen/politbarometer/stimmung-1998.htm',
+    # 'http://www.wahlrecht.de/umfragen/politbarometer/stimmung.htm',
+    # 'http://www.wahlrecht.de/umfragen/politbarometer/stimmung-2013.htm',
+    # 'http://www.wahlrecht.de/umfragen/politbarometer/stimmung-2009.htm',
+    # 'http://www.wahlrecht.de/umfragen/politbarometer/stimmung-2005.htm',
+    # 'http://www.wahlrecht.de/umfragen/politbarometer/stimmung-2002.htm',
+    # 'http://www.wahlrecht.de/umfragen/politbarometer/stimmung-1998.htm',
     # GMS
     # Projektion
     'http://www.wahlrecht.de/umfragen/gms.htm',
@@ -85,7 +85,7 @@ if (!file.exists('daten/scraped_tables.RData')) {
     # Projektion
     'http://www.wahlrecht.de/umfragen/politbarometer.htm',
     # Politische Stimmung
-    'http://www.wahlrecht.de/umfragen/politbarometer/stimmung.htm',
+    # 'http://www.wahlrecht.de/umfragen/politbarometer/stimmung.htm',
     # GMS
     # Projektion
     'http://www.wahlrecht.de/umfragen/gms.htm',
