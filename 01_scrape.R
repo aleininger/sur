@@ -107,6 +107,8 @@ if (!file.exists('daten/scraped_tables.RData')) {
       str_extract(url,'(allensbach|emnid|forsa|politbarometer|gms|dimap|insa)')
     tmp$url <- url
     d_new <- bind_rows(d_new, tmp)
+
+    d_new$timestamp <- Sys.time()  # timestamp
   }
 
   # alten Daten laden
@@ -173,6 +175,19 @@ df$jahr <- year(df$datum)
 
 df$jahr[which(is.na(df$jahr))] <- year(df$vdatum[which(is.na(df$jahr))])
 
+df$feldzeit_ende <- paste0(str_extract(df$feldzeit_ende, '\\d\\d\\.\\d\\d\\.'),
+                           year(df$vdatum)) %>% dmy
+df$feldzeit_beginn <- ifelse(dmy(paste0(str_extract(df$feldzeit_beginn,
+                                         '\\d\\d\\.\\d\\d\\.'),
+                             year(df$vdatum))) > df$feldzeit_ende,
+                             dmy(paste0(str_extract(df$feldzeit_beginn,
+                                                    '\\d\\d\\.\\d\\d\\.'),
+                                        year(df$vdatum) - 1)),
+                             dmy(paste0(str_extract(df$feldzeit_beginn,
+                                                    '\\d\\d\\.\\d\\d\\.'),
+                                        year(df$vdatum))))
+
+
 # Institutsnamen anpassen
 df$institut <- car::recode(df$institut, "'allensbach' = 'Allensbach';
                            'emnid' = 'Emnid'; 'forsa' = 'Forsa';
@@ -186,7 +201,7 @@ df <- df %>% tidyr::gather(key = partei, value = stimmanteil,
 df <- df %>% filter(partei != 'sonstige', partei != 'piraten')
 
 # Konfidenzintervalle berechnen
-df$se <- sqrt(((df$stimmanteil/100) * (1 - (df$stimmanteil/100))) / df$befragte)  # Standardfehler
+df$se <- round(sqrt(((df$stimmanteil/100) * (1 - (df$stimmanteil/100))) / df$befragte), 5)  # Standardfehler
 df$lwr <- round(df$stimmanteil - 1.96 * df$se * 100, 1)  # Unteres Ende 95% Konfidenzintervall
 df$upr <- round(df$stimmanteil + 1.96 * df$se * 100, 1) # Oberes Ende 95% Konfidenzintervall
 
