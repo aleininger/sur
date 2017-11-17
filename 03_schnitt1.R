@@ -18,7 +18,7 @@ df$woche <- week(df$datum) # Woche der Umfrage
 monatsschnitt <-
   df %>% filter(!is.na(jahr), !is.na(monat)) %>%
   group_by(jahr, monat, partei) %>%
-  summarise(stimmanteil = mean(stimmanteil, na.rm = T)) %>%
+  summarise(stimmanteil = round(mean(stimmanteil, na.rm = T), 1)) %>%
   filter(!is.na(stimmanteil)) %>%
   mutate(date = paste(jahr, monat, '01', sep = '-'),
          partei = recode(partei, afd = 'AfD', cdu_csu = 'CDU/CSU',
@@ -28,7 +28,8 @@ monatsschnitt <-
   filter(!is.na(date)) %>%
   spread(partei, stimmanteil) %>% ungroup() %>%
   select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, `Bündnis 90/Die Grünen`,
-         FDP)
+         FDP) %>%
+  arrange(desc(date))
 
 write.csv(monatsschnitt, 'daten/schnitt1_monat.csv', row.names = F)
 
@@ -36,7 +37,7 @@ write.csv(monatsschnitt, 'daten/schnitt1_monat.csv', row.names = F)
 
 wochenschnitt <- df %>% filter(!is.na(jahr), !is.na(woche)) %>%
   group_by(jahr, woche, partei) %>%
-  summarise(stimmanteil = mean(stimmanteil, na.rm = T)) %>%
+  summarise(stimmanteil = round(mean(stimmanteil, na.rm = T), 1)) %>%
   filter(!is.na(stimmanteil)) %>%
   mutate(date = as.Date(paste(jahr, woche, 1, sep="-"), "%Y-%U-%u"),
          partei = recode(partei, afd = 'AfD', cdu_csu = 'CDU/CSU',
@@ -46,6 +47,7 @@ wochenschnitt <- df %>% filter(!is.na(jahr), !is.na(woche)) %>%
   filter(!is.na(date)) %>%
   spread(partei, stimmanteil) %>% ungroup() %>%
   select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, `Bündnis 90/Die Grünen`,
-         FDP)
+         FDP) %>%
+  arrange(desc(date))
 
 write.csv(wochenschnitt, 'daten/schnitt1.csv', row.names = F)
