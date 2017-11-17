@@ -1,6 +1,5 @@
 # 01 scrape.R (alternativ): zieht die Daten von wahlrecht.de
 
-# setwd('~/Dropbox/Signal&Rauschen/06_Daten & Visualisierung/')  # Arndt Pfad
 # setwd('~/Git/signalundrauschen')
 
 library(htmltab)
@@ -127,11 +126,11 @@ save(list = 'd', file = 'daten/scraped_tables.RData')
 # Formatierung des Ursprungsdatensatzes (1 Zeile = 1 Umfrage)
 df <- tbl_df(d)
 
-df <- df %>% select(datum, `CDU/CSU`:url, Linke.PDS, PIRATEN, PDS)
+df <- df %>% select(datum, `CDU/CSU`:timestamp, Linke.PDS, PIRATEN, PDS)
 
 names(df) <- c('vdatum', 'cdu_csu', 'spd', 'gruene', 'fdp', 'linke', 'afd',
                'sonstige', 'befragte', 'feldzeit', 'institut', 'url',
-               'piraten', 'linke_pds', 'pds')
+               'timestamp', 'piraten', 'linke_pds', 'pds')
 
 df <- df %>% filter(!grepl('Wahl', vdatum) & !grepl('wahl', befragte) &
                       !grepl('wahl', feldzeit))  # Wahlergebnisse entfernen
@@ -194,7 +193,7 @@ df$institut <- car::recode(df$institut, "'allensbach' = 'Allensbach';
                            'politbarometer' = 'FG Wahlen'; 'gms' = 'GMS';
                            'dimap' = 'Infratest Dimap'; 'insa' = 'INSA'")
 
-# Longfrom (i.e. tidy data): 1 Zeile = 1 Partei in einer Umfrage
+# Longform (i.e. tidy data): 1 Zeile = 1 Partei in einer Umfrage
 df <- df %>% tidyr::gather(key = partei, value = stimmanteil,
                            cdu_csu:sonstige, piraten:linke_pds, -befragte)
 
