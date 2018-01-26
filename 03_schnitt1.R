@@ -1,6 +1,5 @@
 # 02 schnitt1.R: Berechnet die Durchschnitte
 
-# setwd('~/Dropbox/Signal&Rauschen/06_Daten & Visualisierung/')  # Arndt Pfad
 # setwd('~/Git/signalundrauschen')
 
 library(dplyr)
@@ -21,7 +20,7 @@ monatsschnitt <-
   summarise(stimmanteil = round(mean(stimmanteil, na.rm = T), 1)) %>%
   filter(!is.na(stimmanteil)) %>%
   mutate(date = paste(jahr, monat, '01', sep = '-'),
-         partei = recode(partei, afd = 'AfD', cdu_csu = 'CDU/CSU',
+         partei = dplyr::recode(partei, afd = 'AfD', cdu_csu = 'CDU/CSU',
                          fdp = 'FDP', gruene = "Bündnis 90/Die Grünen",
                          linke_pds = 'Die Linke/PDS', piraten = 'Piraten',
                          sonstige = 'Sonstige', spd = 'SPD')) %>%
@@ -40,7 +39,7 @@ wochenschnitt <- df %>% filter(!is.na(jahr), !is.na(woche)) %>%
   summarise(stimmanteil = round(mean(stimmanteil, na.rm = T), 1)) %>%
   filter(!is.na(stimmanteil)) %>%
   mutate(date = as.Date(paste(jahr, woche, 1, sep="-"), "%Y-%U-%u"),
-         partei = recode(partei, afd = 'AfD', cdu_csu = 'CDU/CSU',
+         partei = dplyr::recode(partei, afd = 'AfD', cdu_csu = 'CDU/CSU',
                          fdp = 'FDP', gruene = "Bündnis 90/Die Grünen",
                          linke_pds = 'Die Linke/PDS', piraten = 'Piraten',
                          sonstige = 'Sonstige', spd = 'SPD')) %>%

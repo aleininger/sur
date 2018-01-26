@@ -1,4 +1,4 @@
-# 01 scrape.R (alternativ): zieht die Daten von wahlrecht.de
+# 01 scrape.R: zieht die Daten von wahlrecht.de
 
 # setwd('~/Git/signalundrauschen')
 
@@ -71,6 +71,8 @@ if (!file.exists('daten/scraped_tables.RData')) {
   # Duplikate entfernen
   d <- d %>% distinct(.keep_all = TRUE)
 
+  d$timestamp <- Sys.time()  # timestamp
+
 } else {
   cat("Fetch only updated files.")
   urls <- c(
@@ -126,7 +128,9 @@ save(list = 'd', file = 'daten/scraped_tables.RData')
 # Formatierung des Ursprungsdatensatzes (1 Zeile = 1 Umfrage)
 df <- tbl_df(d)
 
-df <- df %>% select(datum, `CDU/CSU`:timestamp, Linke.PDS, PIRATEN, PDS)
+df <- df %>% select(datum, `CDU/CSU`, SPD, GRÜNE, FDP, LINKE,
+                    AfD, Sonstige, Befragte, Zeitraum, institut,
+                    url, timestamp, PIRATEN, Linke.PDS, PDS)
 
 names(df) <- c('vdatum', 'cdu_csu', 'spd', 'gruene', 'fdp', 'linke', 'afd',
                'sonstige', 'befragte', 'feldzeit', 'institut', 'url',
@@ -197,7 +201,7 @@ df$institut <- car::recode(df$institut, "'allensbach' = 'Allensbach';
 df <- df %>% tidyr::gather(key = partei, value = stimmanteil,
                            cdu_csu:sonstige, piraten:linke_pds, -befragte)
 
-df <- df %>% filter(partei != 'sonstige', partei != 'piraten')
+# df <- df %>% filter(partei != 'sonstige', partei != 'piraten')
 
 # Konfidenzintervalle berechnen
 df$se <- round(sqrt(((df$stimmanteil/100) * (1 - (df$stimmanteil/100))) / df$befragte), 5)  # Standardfehler
@@ -208,7 +212,7 @@ df$upr <- round(df$stimmanteil + 1.96 * df$se * 100, 1) # Oberes Ende 95% Konfid
 
 df <- df %>% arrange(desc(datum), institut, partei)
 
-source('02_abweichung.R')
+# source('02_abweichung.R')
 
 write.csv(df, 'daten/umfragedaten.csv', row.names = F)
 
