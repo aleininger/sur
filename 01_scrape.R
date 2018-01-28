@@ -61,7 +61,7 @@ if (!file.exists('daten/scraped_tables.RData')) {
   d <- data.frame()
   for(url in urls) {
     cat(url)
-    tmp <- htmltab(url, which = 2)
+    tmp <- htmltab(url, which = 2, )
     names(tmp)[1] <- 'datum'
     tmp$institut <-
       str_extract(url,'(allensbach|emnid|forsa|politbarometer|gms|dimap|insa)')
@@ -128,7 +128,7 @@ save(list = 'd', file = 'daten/scraped_tables.RData')
 # Formatierung des Ursprungsdatensatzes (1 Zeile = 1 Umfrage)
 df <- tbl_df(d)
 
-df <- df %>% select(datum, `CDU/CSU`, SPD, GRÜNE, FDP, LINKE,
+df <- df %>% select(datum, `CDU/CSU`, SPD, starts_with('GR'), FDP, LINKE,
                     AfD, Sonstige, Befragte, Zeitraum, institut,
                     url, timestamp, PIRATEN, Linke.PDS, PDS)
 
