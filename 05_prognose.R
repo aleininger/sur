@@ -38,11 +38,13 @@ df <- df %>% filter(!is.na(prognose))
 
 df <-
   df %>% select(date, party, prognose) %>%
+  mutate(party = dplyr::recode(partei, afd = 'AfD', cdu_csu = 'CDU/CSU',
+                               fdp = 'FDP', gruene = "Bündnis 90/Die Grünen",
+                               linke_pds = 'Die Linke/PDS', piraten = 'Piraten',
+                               sonstige = 'Sonstige', spd = 'SPD'))) %>%
   tidyr::spread(party, prognose) %>%
-  ungroup() %>% rename(`CDU/CSU` = cdu_csu, SPD = spd,
-                       `Die Linke/PDS` = linke_pds, AfD = afd,
-                       `Bündnis 90/Die Grünen` = gruene, FDP = fdp) %>%
-  select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, `Bündnis 90/Die Grünen`,
+  ungroup() %>%
+  select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, starts_with('B'),
          FDP)
 
 write.csv(df, 'daten/schnitt3.csv', row.names = F)

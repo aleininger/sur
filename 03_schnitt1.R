@@ -26,7 +26,7 @@ monatsschnitt <-
                          sonstige = 'Sonstige', spd = 'SPD')) %>%
   filter(!is.na(date)) %>%
   spread(partei, stimmanteil) %>% ungroup() %>%
-  select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, `Bündnis 90/Die Grünen`,
+  select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, starts_with('B'),
          FDP) %>%
   arrange(desc(date))
 
@@ -45,7 +45,7 @@ wochenschnitt <- df %>% filter(!is.na(jahr), !is.na(woche)) %>%
                          sonstige = 'Sonstige', spd = 'SPD')) %>%
   filter(!is.na(date)) %>%
   spread(partei, stimmanteil) %>% ungroup() %>%
-  select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, `Bündnis 90/Die Grünen`,
+  select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, starts_with('B'),
          FDP) %>%
   arrange(desc(date))
 
