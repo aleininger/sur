@@ -47,6 +47,6 @@ wochenschnitt <- df %>% filter(!is.na(jahr), !is.na(woche)) %>%
   spread(partei, stimmanteil) %>% ungroup() %>%
   select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, starts_with('B'),
          FDP) %>%
-  arrange(desc(date))
+  arrange(date)
 
 write.csv(wochenschnitt, 'daten/schnitt1.csv', row.names = F)
