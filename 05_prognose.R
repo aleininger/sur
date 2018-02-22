@@ -38,10 +38,10 @@ df <- df %>% filter(!is.na(prognose))
 
 df <-
   df %>% select(date, party, prognose) %>%
-  mutate(party = dplyr::recode(partei, afd = 'AfD', cdu_csu = 'CDU/CSU',
+  mutate(party = dplyr::recode(party, afd = 'AfD', cdu_csu = 'CDU/CSU',
                                fdp = 'FDP', gruene = "Bündnis 90/Die Grünen",
                                linke_pds = 'Die Linke/PDS', piraten = 'Piraten',
-                               sonstige = 'Sonstige', spd = 'SPD'))) %>%
+                               sonstige = 'Sonstige', spd = 'SPD')) %>%
   tidyr::spread(party, prognose) %>%
   ungroup() %>%
   select(date, `CDU/CSU`, SPD, `Die Linke/PDS`, AfD, starts_with('B'),
